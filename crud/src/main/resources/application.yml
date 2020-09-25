@@ -12,11 +12,11 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-##        dialect: org.hibernate.dialect.MySQL8Dialect
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
+##        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3326/crud?allowPublicKeyRetrieval=true&sslMode=DISABLED&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/crud?allowPublicKeyRetrieval=true&sslMode=DISABLED&useSSL=false&serverTimezone=UTC
     username: root
-    password: 123456
+    password: Dsskl101

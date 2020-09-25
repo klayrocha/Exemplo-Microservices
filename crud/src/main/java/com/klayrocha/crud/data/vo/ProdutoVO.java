@@ -40,4 +40,5 @@ public class ProdutoVO extends RepresentationModel<ProdutoVO> implements Seriali
 	public static ProdutoVO create(Produto produto) {
 		return new ModelMapper().map(produto, ProdutoVO.class);
 	}
+
 }

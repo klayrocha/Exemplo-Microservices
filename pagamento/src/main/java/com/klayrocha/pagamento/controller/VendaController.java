@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,10 +33,12 @@ import com.klayrocha.pagamento.services.VendaServices;
 public class VendaController {
 
 	private final VendaServices vendaServices;
+	private final PagedResourcesAssembler<VendaVO> assembler;
 
 	@Autowired
-	public VendaController(VendaServices vendaServices) {
+	public VendaController(VendaServices vendaServices, PagedResourcesAssembler<VendaVO> assembler) {
 		this.vendaServices = vendaServices;
+		this.assembler = assembler;
 	}
 
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
@@ -56,7 +61,9 @@ public class VendaController {
 
 		vendas.stream().forEach(p -> p.add(linkTo(methodOn(VendaController.class).findById(p.getId())).withSelfRel()));
 
-		return new ResponseEntity<>(vendas, HttpStatus.OK);
+		PagedModel<EntityModel<VendaVO>> pagedModel = assembler.toModel(vendas);
+
+		return new ResponseEntity<>(pagedModel, HttpStatus.OK);
 	}
 
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
