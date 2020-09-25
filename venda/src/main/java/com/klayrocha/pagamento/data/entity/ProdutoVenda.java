@@ -1,17 +1,20 @@
-package com.klayrocha.crud.data.entity;
+package com.klayrocha.pagamento.data.entity;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.modelmapper.ModelMapper;
 
-import com.klayrocha.crud.data.vo.ProdutoVO;
+import com.klayrocha.pagamento.data.vo.ProdutoVendaVO;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,14 +24,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "produto")
+@Table(name = "produto_venda")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Produto implements Serializable {
+public class ProdutoVenda implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,17 +39,17 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "nome", nullable = false, length = 255)
-	private String nome;
+	@Column(name = "id_produto", nullable = false, length = 10)
+	private Integer idProduto;
 
-	@Column(name = "estoque", nullable = false, length = 10)
-	private Integer estoque;
+	@Column(name = "quantidade", nullable = false, length = 10)
+	private Integer quantidade;
 
-	@Column(name = "preco", nullable = false, length = 10)
-	private Double preco;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_venda")
+	private Venda venda;
 
-	public static Produto create(ProdutoVO produtoVO) {
-		return new ModelMapper().map(produtoVO, Produto.class);
+	public static ProdutoVenda create(ProdutoVendaVO produtoVO) {
+		return new ModelMapper().map(produtoVO, ProdutoVenda.class);
 	}
-
 }

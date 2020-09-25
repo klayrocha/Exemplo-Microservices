@@ -1,13 +1,13 @@
-package com.klayrocha.venda;
+package com.klayrocha.pagamento;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VendaApplication {
+public class PagamentoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VendaApplication.class, args);
+		SpringApplication.run(PagamentoApplication.class, args);
 	}
 
 }

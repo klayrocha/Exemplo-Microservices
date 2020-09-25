@@ -1,4 +1,4 @@
-package com.klayrocha.crud.controller;
+package com.klayrocha.pagamento.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -21,26 +21,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.klayrocha.crud.data.entity.Produto;
-import com.klayrocha.crud.data.vo.ProdutoVO;
-import com.klayrocha.crud.services.ProdutoServices;
+import com.klayrocha.pagamento.data.entity.Venda;
+import com.klayrocha.pagamento.data.vo.VendaVO;
+import com.klayrocha.pagamento.services.VendaServices;
 
 @RestController
-@RequestMapping("/produto")
-public class ProdutoController {
+@RequestMapping("/venda")
+public class VendaController {
 
-	private final ProdutoServices produtoServices;
+	private final VendaServices vendaServices;
 
 	@Autowired
-	public ProdutoController(ProdutoServices produtoServices) {
-		this.produtoServices = produtoServices;
+	public VendaController(VendaServices vendaServices) {
+		this.vendaServices = vendaServices;
 	}
 
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public ProdutoVO findById(@PathVariable("id") Long id) {
-		ProdutoVO produtoVO = produtoServices.findById(id);
-		produtoVO.add(linkTo(methodOn(ProdutoController.class).findById(id)).withSelfRel());
-		return produtoVO;
+	public VendaVO findById(@PathVariable("id") Long id) {
+		VendaVO vendaVO = vendaServices.findById(id);
+		vendaVO.add(linkTo(methodOn(VendaController.class).findById(id)).withSelfRel());
+		return vendaVO;
 	}
 
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
@@ -50,35 +50,34 @@ public class ProdutoController {
 
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 
-		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "nome"));
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "data"));
 
-		Page<ProdutoVO> produtos = produtoServices.findAll(pageable);
+		Page<VendaVO> vendas = vendaServices.findAll(pageable);
 
-		produtos.stream()
-				.forEach(p -> p.add(linkTo(methodOn(ProdutoController.class).findById(p.getId())).withSelfRel()));
+		vendas.stream().forEach(p -> p.add(linkTo(methodOn(VendaController.class).findById(p.getId())).withSelfRel()));
 
-		return new ResponseEntity<>(produtos, HttpStatus.OK);
+		return new ResponseEntity<>(vendas, HttpStatus.OK);
 	}
 
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
-	public ProdutoVO create(@RequestBody ProdutoVO produto) {
-		ProdutoVO produtoVO = produtoServices.create(produto);
-		produtoVO.add(linkTo(methodOn(ProdutoController.class).findById(produtoVO.getId())).withSelfRel());
-		return produtoVO;
+	public VendaVO create(@RequestBody VendaVO venda) {
+		VendaVO vendaVO = vendaServices.create(venda);
+		vendaVO.add(linkTo(methodOn(VendaController.class).findById(vendaVO.getId())).withSelfRel());
+		return vendaVO;
 	}
 
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
-	public ProdutoVO update(@RequestBody ProdutoVO produto) {
-		ProdutoVO personVO = produtoServices.update(Produto.create(produto));
-		personVO.add(linkTo(methodOn(ProdutoController.class).findById(personVO.getId())).withSelfRel());
+	public VendaVO update(@RequestBody VendaVO venda) {
+		VendaVO personVO = vendaServices.update(Venda.create(venda));
+		personVO.add(linkTo(methodOn(VendaController.class).findById(personVO.getId())).withSelfRel());
 		return personVO;
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		produtoServices.delete(id);
+		vendaServices.delete(id);
 		return ResponseEntity.ok().build();
 	}
 
