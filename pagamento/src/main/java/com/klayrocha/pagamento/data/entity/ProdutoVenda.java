@@ -49,7 +49,7 @@ public class ProdutoVenda implements Serializable {
 	@JoinColumn(name = "id_venda")
 	private Venda venda;
 
-	public static ProdutoVenda create(ProdutoVendaVO produtoVO) {
-		return new ModelMapper().map(produtoVO, ProdutoVenda.class);
+	public static ProdutoVenda create(ProdutoVendaVO produtoVendaVO) {
+		return new ModelMapper().map(produtoVendaVO, ProdutoVenda.class);
 	}
 }
