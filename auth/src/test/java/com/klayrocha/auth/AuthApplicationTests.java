@@ -1,15 +1,13 @@
-package com.klayrocha.crud;
+package com.klayrocha.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CrudApplicationTests {
+class AuthApplicationTests {
 
 	@Test
 	void contextLoads() {
 	}
 
 }
-
-
