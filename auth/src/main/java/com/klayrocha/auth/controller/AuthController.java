@@ -38,6 +38,12 @@ public class AuthController {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	
+	@RequestMapping("/teste")
+	public String hello() {
+		return "hello";
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, 
 			consumes = { "application/json", "application/xml", "application/x-yaml" })

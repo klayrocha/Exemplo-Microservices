@@ -47,5 +47,4 @@ security:
   jwt:
     token:
       secret-key: CHAVE_ASSINATURA
-      expire-length: 3600000
       

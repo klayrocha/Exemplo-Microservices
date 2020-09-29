@@ -41,4 +41,10 @@ eureka:
     hostname: localhost
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/registry/eureka        
+      defaultZone: http://localhost:8761/registry/eureka     
+      
+# JWT
+security:
+  jwt:
+    token:
+      secret-key: CHAVE_ASSINATURA         
